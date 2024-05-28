@@ -75,8 +75,9 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.edit', compact('project', 'types'));
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -91,6 +92,13 @@ class ProjectController extends Controller
             return redirect()->route('admin.projects.edit', $project)->with('error', 'Progetto non modificato perchè già esistente');
         }else{
             $project->update($form_data);
+
+            if(array_key_exists('technologies', $form_data)){
+                $project->technologies()->sync($form_data['technologiesw']);
+            }else{
+                $project->technologies()->detach();
+            }
+
             return redirect()->route('admin.projects.show', $project)->with('success', 'Progetto modificato correttamente');
         }
     }
