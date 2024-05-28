@@ -13,6 +13,7 @@
         </div>
 
         <div>
+            {{-- stampo i type --}}
             @if ($project->type)
                 <div class="mb-3">
                     <label>Type:</label>
@@ -20,6 +21,15 @@
                 </div>
             @endif
 
+            {{-- stampo le technology --}}
+            @if ($project->technologies)
+                <div class="mb-3">
+                    <label>Technology:</label>
+                    @foreach ($project->technologies as $technology)
+                        <span class="badge text-bg-warning fs-6">{{ $technology->name }}</span>
+                    @endforeach
+                </div>
+            @endif
 
             <div class="mb-5">
                 <label>Titolo:</label>
