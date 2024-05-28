@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 use App\Http\Requests\ProjectRequest;
 
 class ProjectController extends Controller
@@ -32,8 +33,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.create', compact('types'));
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -50,6 +52,10 @@ class ProjectController extends Controller
             $new_project = new Project();
             $new_project->fill($form_data);
             $new_project->save();
+
+            if(array_key_exists('technologies', $form_data)){
+                $new_project->technologies()->attach($form_data['technologies']);
+            }
 
             return redirect()->route('admin.projects.show', $new_project)->with('success', 'Progetto aggiunto correttamente');
         }

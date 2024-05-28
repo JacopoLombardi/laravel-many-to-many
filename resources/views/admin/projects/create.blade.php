@@ -46,7 +46,7 @@
                     <h6 class="text-danger">{{ $message }}</h6>
                 @enderror
 
-
+                {{-- selezione del Type tramite select --}}
                 <select class="form-select w-50 mt-3" name="type_id">
                     <option value="">Selected Type</option>
                     @foreach ($types as $type)
@@ -58,6 +58,27 @@
                         </option>
                     @endforeach
                 </select>
+
+                {{-- selezione del Technology tramite checkbox --}}
+                <div class="col-6 d-flex flex-column mt-3 mb-5">
+                    <label>Select Technology</label>
+                    <div>
+                        @foreach ($technologies as $technology)
+                            <input
+                              class="btn-check"
+                              type="checkbox"
+                              name="technologies[]"
+                              autocomplete="off"
+                              id="technology{{ $technology->id }}"
+                              value="{{ $technology->id }}"
+                              @if (in_array($technology->id, old('technologies', [])))
+                                checked
+                              @endif
+                            >
+                            <label class="btn btn-outline-primary rounded-5 me-2 mt-3 py-1" for="technology{{ $technology->id }}">{{ $technology->name }}</label>
+                        @endforeach
+                    </div>
+                </div>
 
 
                 <textarea class="form-control w-50 my-4" placeholder="Descrizione" name="description" cols="30" rows="5" name="description"></textarea>

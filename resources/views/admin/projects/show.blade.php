@@ -25,11 +25,14 @@
             @if ($project->technologies)
                 <div class="mb-3">
                     <label>Technology:</label>
-                    @foreach ($project->technologies as $technology)
-                        <span class="badge text-bg-warning fs-6">{{ $technology->name }}</span>
-                    @endforeach
+                    @forelse ($project->technologies as $technology)
+                        <span class="badge text-bg-warning fs-6 ms-2">{{ $technology->name }}</span>
+                    @empty
+                        <span class="badge text-bg-danger fs-6 ms-2">Empty</span>
+                    @endforelse
                 </div>
             @endif
+
 
             <div class="mb-5">
                 <label>Titolo:</label>
