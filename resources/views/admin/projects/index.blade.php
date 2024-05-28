@@ -35,6 +35,7 @@
                     <tr class="fs-5">
                         <th scope="col">Titolo</th>
                         <th scope="col">Type</th>
+                        <th scope="col">Technology</th>
                         <th scope="col">Descrizione</th>
                         <th scope="col">Azioni</th>
                     </tr>
@@ -45,8 +46,18 @@
                         <tr>
                             <td>{{ $project->title }}</td>
 
-                            {{-- tramite one to many mi ricavo il nome del Type associato al rispettivo Project, e con ? nullsafeoperator, mi restituisce il name solo se esiste, seza dare errori --}}
+                            {{-- tramite One to Many mi ricavo il nome del Type associato al rispettivo Project, e con ? nullsafeoperator, mi restituisce il name solo se esiste, seza dare errori --}}
                             <td>{{ $project->type?->name }}</td>
+
+
+                            {{-- tramite Many to Many ricavo i Technologies da assegnare ad ogni Project tramite un ciclo each con condizione --}}
+                            <td>
+                                @forelse ($project->technologies as $technology)
+                                    <span class="badge text-bg-warning">{{ $technology->name }}</span>
+                                @empty
+                                    <span class="badge text-bg-danger">Empty</span>
+                                @endforelse
+                            </td>
 
                             <td>{{ $project->description }}</td>
 
